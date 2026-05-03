@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class ChatTopBar extends StatelessWidget {
-  const ChatTopBar({super.key, required this.colors});
+  const ChatTopBar({super.key, required this.colors, this.onSignOut});
 
   final ColorScheme colors;
+  final VoidCallback? onSignOut;
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +48,14 @@ class ChatTopBar extends StatelessWidget {
           ),
         ),
         _StatusPill(label: 'Online', color: colors.primary),
+        if (onSignOut != null) ...<Widget>[
+          const SizedBox(width: 8),
+          IconButton(
+            tooltip: 'Sign out',
+            onPressed: onSignOut,
+            icon: const Icon(Icons.logout_rounded),
+          ),
+        ],
       ],
     );
   }
@@ -77,7 +86,7 @@ class _StatusPill extends StatelessWidget {
               color: color,
               shape: BoxShape.circle,
               boxShadow: <BoxShadow>[
-                BoxShadow(color: color.withOpacity(0.45), blurRadius: 10),
+                BoxShadow(color: color.withValues(alpha: 0.45), blurRadius: 10),
               ],
             ),
           ),

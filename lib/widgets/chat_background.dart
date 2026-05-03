@@ -61,7 +61,7 @@ class _AmbientGlow extends StatelessWidget {
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             gradient: RadialGradient(
-              colors: <Color>[color.withOpacity(0.22), Colors.transparent],
+              colors: <Color>[color.withValues(alpha: 0.22), Colors.transparent],
             ),
           ),
         ),

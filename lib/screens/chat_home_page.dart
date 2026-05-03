@@ -53,10 +53,19 @@ class _ChatHomePageState extends State<ChatHomePage> {
 
   Future<void> _initializeFirebaseChat() async {
     try {
-      final user = await _firebaseService.ensureAuthenticatedUser();
+      final user = _firebaseService.getCurrentUser();
+      if (user == null) {
+        if (mounted) {
+          setState(() {
+            _isLoading = false;
+          });
+        }
+        return;
+      }
+
       _userId = user.uid;
 
-        final DocumentSnapshot? latestConversation =
+      final DocumentSnapshot? latestConversation =
           await _firebaseService.getLatestConversation(user.uid);
 
       if (latestConversation == null) {
@@ -208,6 +217,16 @@ class _ChatHomePageState extends State<ChatHomePage> {
               ? const Center(
                   child: CircularProgressIndicator(),
                 )
+              : _userId == null
+                  ? const Center(
+                      child: Padding(
+                        padding: EdgeInsets.all(24),
+                        child: Text(
+                          'Sign in from the app home screen to access your chat history.',
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    )
               : LayoutBuilder(
                   builder: (BuildContext context, BoxConstraints constraints) {
                     final bool isWide = constraints.maxWidth >= 980;
@@ -219,7 +238,10 @@ class _ChatHomePageState extends State<ChatHomePage> {
                       ),
                       child: Column(
                         children: <Widget>[
-                          ChatTopBar(colors: colors),
+                          ChatTopBar(
+                            colors: colors,
+                            onSignOut: _firebaseService.signOut,
+                          ),
                           const SizedBox(height: 14),
                           Expanded(
                             child: isWide
@@ -251,8 +273,9 @@ class _ChatHomePageState extends State<ChatHomePage> {
                                         child: ListView.separated(
                                           scrollDirection: Axis.horizontal,
                                           itemCount: _prompts.length,
-                                          separatorBuilder: (_, __) =>
-                                              const SizedBox(width: 12),
+                                            separatorBuilder:
+                                              (BuildContext context, int index) =>
+                                                const SizedBox(width: 12),
                                           itemBuilder:
                                               (BuildContext context, int index) {
                                             final ChatPrompt prompt = _prompts[index];

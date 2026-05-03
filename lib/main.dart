@@ -16,7 +16,7 @@ void main() async {
   try {
     await firebaseService.initialize();
   } catch (e) {
-    print('Warning: Firebase initialization failed: $e');
+    debugPrint('Warning: Firebase initialization failed: $e');
     // App will still run without Firebase
   }
   

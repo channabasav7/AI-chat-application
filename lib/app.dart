@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
+import 'screens/auth_page.dart';
 import 'screens/chat_home_page.dart';
 
 void bootstrapApp() {
@@ -44,7 +46,19 @@ class MyApp extends StatelessWidget {
           bodySmall: TextStyle(fontSize: 12, height: 1.3),
         ),
       ),
-      home: const ChatHomePage(),
+      home: StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Scaffold(
+              body: Center(child: CircularProgressIndicator()),
+            );
+          }
+
+          final User? user = snapshot.data;
+          return user == null ? const AuthPage() : const ChatHomePage();
+        },
+      ),
     );
   }
 }

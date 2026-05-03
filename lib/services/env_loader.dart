@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 /// Loads environment variables from .env file
@@ -5,9 +6,9 @@ class EnvLoader {
   static Future<void> load() async {
     try {
       await dotenv.load(fileName: '.env');
-      print('Environment variables loaded successfully');
+      debugPrint('Environment variables loaded successfully');
     } catch (e) {
-      print('Warning: Could not load .env file: $e');
+      debugPrint('Warning: Could not load .env file: $e');
       // This is okay in production where .env might not exist
     }
   }

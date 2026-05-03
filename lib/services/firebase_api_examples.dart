@@ -22,9 +22,9 @@ class FirebaseApiExamples {
         'user@example.com',
         'SecurePassword123!',
       );
-      print('User created: ${credential.user?.uid}');
+      debugPrint('User created: ${credential.user?.uid}');
     } catch (e) {
-      print('Sign up error: $e');
+      debugPrint('Sign up error: $e');
     }
   }
 
@@ -35,9 +35,9 @@ class FirebaseApiExamples {
         'user@example.com',
         'SecurePassword123!',
       );
-      print('User signed in: ${credential.user?.uid}');
+      debugPrint('User signed in: ${credential.user?.uid}');
     } catch (e) {
-      print('Sign in error: $e');
+      debugPrint('Sign in error: $e');
     }
   }
 
@@ -45,9 +45,9 @@ class FirebaseApiExamples {
   static void exampleCheckAuth() {
     if (firebaseService.isUserAuthenticated()) {
       final user = firebaseService.getCurrentUser();
-      print('Current user: ${user?.email}');
+      debugPrint('Current user: ${user?.email}');
     } else {
-      print('User not authenticated');
+      debugPrint('User not authenticated');
     }
   }
 
@@ -63,9 +63,9 @@ class FirebaseApiExamples {
         userId: userId,
         title: 'My First Chat',
       );
-      print('Conversation created: $conversationId');
+      debugPrint('Conversation created: $conversationId');
     } catch (e) {
-      print('Error creating conversation: $e');
+      debugPrint('Error creating conversation: $e');
     }
   }
 
@@ -82,9 +82,9 @@ class FirebaseApiExamples {
         isUser: true,
         timestamp: DateTime.now().toString(),
       );
-      print('Message saved successfully');
+      debugPrint('Message saved successfully');
     } catch (e) {
-      print('Error saving message: $e');
+      debugPrint('Error saving message: $e');
     }
   }
 
@@ -99,10 +99,10 @@ class FirebaseApiExamples {
     ).listen(
       (snapshot) {
         for (var doc in snapshot.docs) {
-          print('Message: ${doc['text']}');
+          debugPrint('Message: ${doc['text']}');
         }
       },
-      onError: (e) => print('Error: $e'),
+      onError: (e) => debugPrint('Error: $e'),
     );
   }
 
@@ -114,10 +114,10 @@ class FirebaseApiExamples {
     firebaseService.getUserConversations(userId).listen(
       (snapshot) {
         for (var doc in snapshot.docs) {
-          print('Conversation: ${doc['title']}');
+          debugPrint('Conversation: ${doc['title']}');
         }
       },
-      onError: (e) => print('Error: $e'),
+      onError: (e) => debugPrint('Error: $e'),
     );
   }
 
@@ -132,9 +132,9 @@ class FirebaseApiExamples {
         conversationId: 'conv123',
         newTitle: 'Updated Chat Title',
       );
-      print('Conversation updated');
+      debugPrint('Conversation updated');
     } catch (e) {
-      print('Error updating conversation: $e');
+      debugPrint('Error updating conversation: $e');
     }
   }
 
@@ -148,9 +148,9 @@ class FirebaseApiExamples {
         userId: userId,
         conversationId: 'conv123',
       );
-      print('Conversation deleted');
+      debugPrint('Conversation deleted');
     } catch (e) {
-      print('Error deleting conversation: $e');
+      debugPrint('Error deleting conversation: $e');
     }
   }
 
@@ -169,9 +169,9 @@ class FirebaseApiExamples {
           'theme': 'dark',
         },
       );
-      print('Profile saved');
+      debugPrint('Profile saved');
     } catch (e) {
-      print('Error saving profile: $e');
+      debugPrint('Error saving profile: $e');
     }
   }
 
@@ -183,10 +183,10 @@ class FirebaseApiExamples {
 
       final doc = await firebaseService.getUserProfile(userId);
       if (doc.exists) {
-        print('Profile: ${doc.data()}');
+        debugPrint('Profile: ${doc.data()}');
       }
     } catch (e) {
-      print('Error getting profile: $e');
+      debugPrint('Error getting profile: $e');
     }
   }
 
@@ -198,9 +198,9 @@ class FirebaseApiExamples {
       final response = await apiService.callOpenAI(
         'What is Flutter and why should I use it?',
       );
-      print('OpenAI Response: $response');
+      debugPrint('OpenAI Response: $response');
     } catch (e) {
-      print('Error calling OpenAI: $e');
+      debugPrint('Error calling OpenAI: $e');
     }
   }
 
@@ -211,9 +211,9 @@ class FirebaseApiExamples {
         url: 'https://api.example.com/data',
         headers: {'Authorization': 'Bearer token123'},
       );
-      print('Response: $data');
+      debugPrint('Response: $data');
     } catch (e) {
-      print('Error: $e');
+      debugPrint('Error: $e');
     }
   }
 
@@ -228,9 +228,9 @@ class FirebaseApiExamples {
         },
         headers: {'Authorization': 'Bearer token123'},
       );
-      print('Response: $data');
+      debugPrint('Response: $data');
     } catch (e) {
-      print('Error: $e');
+      debugPrint('Error: $e');
     }
   }
 

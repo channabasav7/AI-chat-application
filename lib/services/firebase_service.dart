@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -21,9 +22,9 @@ class FirebaseService {
       await Firebase.initializeApp();
       _firestore = FirebaseFirestore.instance;
       _auth = FirebaseAuth.instance;
-      print('Firebase initialized successfully');
+      debugPrint('Firebase initialized successfully');
     } catch (e) {
-      print('Error initializing Firebase: $e');
+      debugPrint('Error initializing Firebase: $e');
       rethrow;
     }
   }
@@ -110,7 +111,7 @@ class FirebaseService {
       });
       return docRef.id;
     } catch (e) {
-      print('Error saving chat message: $e');
+      debugPrint('Error saving chat message: $e');
       rethrow;
     }
   }
@@ -147,7 +148,7 @@ class FirebaseService {
       });
       return docRef.id;
     } catch (e) {
-      print('Error creating conversation: $e');
+      debugPrint('Error creating conversation: $e');
       rethrow;
     }
   }
@@ -169,7 +170,7 @@ class FirebaseService {
 
       return querySnapshot.docs.first;
     } catch (e) {
-      print('Error getting latest conversation: $e');
+      debugPrint('Error getting latest conversation: $e');
       rethrow;
     }
   }
@@ -201,7 +202,7 @@ class FirebaseService {
         'updatedAt': FieldValue.serverTimestamp(),
       });
     } catch (e) {
-      print('Error updating conversation title: $e');
+      debugPrint('Error updating conversation title: $e');
       rethrow;
     }
   }
@@ -233,7 +234,7 @@ class FirebaseService {
           .doc(conversationId)
           .delete();
     } catch (e) {
-      print('Error deleting conversation: $e');
+      debugPrint('Error deleting conversation: $e');
       rethrow;
     }
   }
@@ -252,7 +253,7 @@ class FirebaseService {
         SetOptions(merge: true),
       );
     } catch (e) {
-      print('Error saving user profile: $e');
+      debugPrint('Error saving user profile: $e');
       rethrow;
     }
   }
@@ -262,7 +263,7 @@ class FirebaseService {
     try {
       return await _firestore.collection('users').doc(userId).get();
     } catch (e) {
-      print('Error getting user profile: $e');
+      debugPrint('Error getting user profile: $e');
       rethrow;
     }
   }
