@@ -69,6 +69,22 @@ class FirebaseService {
     return _auth.currentUser != null;
   }
 
+  /// Ensure there is an authenticated user available for Firestore access.
+  Future<User> ensureAuthenticatedUser() async {
+    final User? currentUser = _auth.currentUser;
+    if (currentUser != null) {
+      return currentUser;
+    }
+
+    final UserCredential credential = await _auth.signInAnonymously();
+    final User? signedInUser = credential.user;
+    if (signedInUser == null) {
+      throw StateError('Failed to sign in anonymously.');
+    }
+
+    return signedInUser;
+  }
+
   // ===== Firestore Methods =====
 
   /// Save a chat message to Firestore
@@ -132,6 +148,28 @@ class FirebaseService {
       return docRef.id;
     } catch (e) {
       print('Error creating conversation: $e');
+      rethrow;
+    }
+  }
+
+  /// Return the most recent conversation for a user if it exists.
+  Future<DocumentSnapshot?> getLatestConversation(String userId) async {
+    try {
+      final QuerySnapshot querySnapshot = await _firestore
+          .collection('users')
+          .doc(userId)
+          .collection('conversations')
+          .orderBy('updatedAt', descending: true)
+          .limit(1)
+          .get();
+
+      if (querySnapshot.docs.isEmpty) {
+        return null;
+      }
+
+      return querySnapshot.docs.first;
+    } catch (e) {
+      print('Error getting latest conversation: $e');
       rethrow;
     }
   }
