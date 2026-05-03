@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "767798087750",
+    "project_id": "ai-chatbot-80b84",
+    "storage_bucket": "ai-chatbot-80b84.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:767798087750:android:5791d93e970344cf61ba47",
+        "android_client_info": {
+          "package_name": "com.nova"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtBQp52HsybeIMbXBkukG5vc5PmYAObm8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

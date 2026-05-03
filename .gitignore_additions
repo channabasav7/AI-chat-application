@@ -1,0 +1,76 @@
+# Environment variables and secrets
+.env
+.env.local
+.env.*.local
+.env.production
+
+# Firebase secrets
+google-services.json
+GoogleService-Info.plist
+
+# IDE and OS files (should already be here)
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Build and dependency files
+build/
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+pubspec.lock
+*.lock
+
+# iOS/macOS specific
+ios/.symlinks/
+ios/.generated.xcconfig
+ios/Flutter/Flutter.podspec
+ios/Flutter/Generated.xcconfig
+macos/Flutter/GeneratedPluginRegistrant.swift
+
+# Android specific
+android/.gradle/
+android/build/
+android/.gradle
+android/app/debug
+android/app/profile
+android/app/release
+android/.idea
+
+# Coverage
+coverage/
+*.lcov
+
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.pyo
+*.pdb
+
+# OS/IDE generated files
+.vscode/settings.json
+.vscode/extensions.json
+.idea/workspace.xml
+.idea/tasks.xml
+
+# Node modules (if using npm)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Sensitive data
+.secrets
+secrets/
+private_keys/
+
+# Temporary files
+*.tmp
+tmp/
+temp/
