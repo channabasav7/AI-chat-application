@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:ai_chatbot/firebase_options.dart';
 
 /// Handles all Firebase operations including authentication and data storage
 class FirebaseService {
@@ -13,18 +14,34 @@ class FirebaseService {
 
   FirebaseService._internal();
 
-  late FirebaseFirestore _firestore;
-  late FirebaseAuth _auth;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   /// Initialize Firebase
   Future<void> initialize() async {
     try {
-      await Firebase.initializeApp();
-      _firestore = FirebaseFirestore.instance;
-      _auth = FirebaseAuth.instance;
+      debugPrint('Attempting to initialize Firebase...');
+
+      if (Firebase.apps.isEmpty) {
+        // Firebase Core will automatically read google-services.json on Android
+        // and GoogleService-Info.plist on iOS
+        await Firebase.initializeApp(
+          options: DefaultFirebaseOptions.currentPlatform,
+        );
+      }
+      
+      debugPrint('✓ Firebase core initialized');
+      
+      // Enable offline persistence for Firestore
+        _firestore.settings = const Settings(
+        persistenceEnabled: true,
+      );
+      
+      debugPrint('✓ Firestore and Auth instances initialized');
       debugPrint('Firebase initialized successfully');
     } catch (e) {
-      debugPrint('Error initializing Firebase: $e');
+      debugPrint('✗ Error initializing Firebase: $e');
+      debugPrint('Stack trace: ${StackTrace.current}');
       rethrow;
     }
   }
